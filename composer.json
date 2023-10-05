@@ -1,30 +1,47 @@
 {
-    "name": "michielkempen/nova-order-field",
-    "description": "A Laravel Nova field.",
+    "name": "gtmassey/nova-order-field",
+    "description": "Sort Model Resource rows in Laravel Nova using the Spatie Eloquent-Sortable package. A fork from @MichielKempen.",
     "keywords": [
         "laravel",
-        "nova"
+        "nova",
+        "nova-field",
+        "sortable",
+        "eloquent-sortable",
+        "michielkempen",
+        "orderable field"
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0",
-        "laravel/nova": "^2.0|^3.0",
-        "spatie/eloquent-sortable": "^3.4|^4.0"
+        "php": ">=8.2",
+        "laravel/nova": "^4.0",
+        "spatie/eloquent-sortable": "^4.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.3.2",
+        "spatie/ray": "^1.28"
     },
     "autoload": {
         "psr-4": {
-            "MichielKempen\\NovaOrderField\\": "src/"
+            "Gtmassey\\NovaOrderField\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "MichielKempen\\NovaOrderField\\OrderFieldServiceProvider"
+                "Gtmassey\\NovaOrderField\\OrderFieldServiceProvider"
             ]
         }
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit",
+        "format": "./vendor/bin/pint",
+        "pint": "./vendor/bin/pint",
+        "analyze": "./vendor/bin/phpstan analyse src tests --level 8"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

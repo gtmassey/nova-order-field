@@ -1,6 +1,6 @@
 <?php
 
-namespace MichielKempen\NovaOrderField;
+namespace Gtmassey\NovaOrderField;
 
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -18,17 +18,16 @@ trait Orderable
     /**
      * Build an "index" query for the given resource.
      *
-     * @param  NovaRequest  $request
      * @param  Builder  $query
      * @return Builder
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if(static::canQueryPivotOrder() && $pivot = static::orderedManyPivotModel($request)) {
+        if (static::canQueryPivotOrder() && $pivot = static::orderedManyPivotModel($request)) {
             return static::orderedPivotIndexQuery($request, $query, $pivot);
         }
 
-        if(!static::canQueryOrder()) {
+        if (! static::canQueryOrder()) {
             return $query;
         }
 
@@ -47,8 +46,8 @@ trait Orderable
      */
     public static function orderedIndexQuery($query, $attribute)
     {
-        if(!$attribute) {
-            abort(500, static::$model . ' should implement the ' . Sortable::class . ' interface and define a valid order_column_name.');
+        if (! $attribute) {
+            abort(500, static::$model.' should implement the '.Sortable::class.' interface and define a valid order_column_name.');
         }
 
         static::$orderedExtrema = [
@@ -83,7 +82,7 @@ trait Orderable
      */
     public static function canQueryOrder()
     {
-        return !is_null(static::modelOrderByFieldAttribute(static::newModel()));
+        return ! is_null(static::modelOrderByFieldAttribute(static::newModel()));
     }
 
     /**
@@ -101,7 +100,6 @@ trait Orderable
     /**
      * Find the orderByField for current request
      *
-     * @param  NovaRequest  $request
      * @return string
      */
     public static function orderByFieldAttribute(NovaRequest $request)
@@ -118,7 +116,7 @@ trait Orderable
      */
     public static function modelOrderByFieldAttribute($model)
     {
-        if (!$model instanceof Sortable) {
+        if (! $model instanceof Sortable) {
             return;
         }
 

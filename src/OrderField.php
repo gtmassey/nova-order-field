@@ -1,10 +1,10 @@
 <?php
 
-namespace MichielKempen\NovaOrderField;
+namespace Gtmassey\NovaOrderField;
 
-use Laravel\Nova\Resource;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Resource;
 
 class OrderField extends Field
 {
@@ -47,7 +47,7 @@ class OrderField extends Field
             $this->getResourcePosition($resource, $resourceClass)
         );
 
-        if($pivot = $this->shouldResolveOnPivot($request, $resourceClass)) {
+        if ($pivot = $this->shouldResolveOnPivot($request, $resourceClass)) {
             $attribute = $resourceClass::modelOrderByFieldAttribute($pivot);
 
             $this->withMeta([
@@ -67,13 +67,12 @@ class OrderField extends Field
     /**
      * Resolve the given attribute from the given resource.
      *
-     * @param  NovaRequest  $request
      * @param  mixed  $resource
-     * @return bool|Resource
+     * @return bool|resource
      */
     protected function shouldResolveOnPivot(NovaRequest $request, $resourceClass)
     {
-        if($resourceClass::canQueryPivotOrder() && $pivot = $resourceClass::orderedManyPivotModel($request)) {
+        if ($resourceClass::canQueryPivotOrder() && $pivot = $resourceClass::orderedManyPivotModel($request)) {
             return $pivot;
         }
 
@@ -83,13 +82,13 @@ class OrderField extends Field
     /**
      * Checks whether the resources is "first" and/or "last" in the IndexQuery
      *
-     * @param mixed $resource
+     * @param  mixed  $resource
      * @param  string  $resourceClass
      * @return void
      */
     protected function getResourcePosition($resource, $resourceClass)
     {
-        if(!is_array($resourceClass::$orderedExtrema ?? null)) {
+        if (! is_array($resourceClass::$orderedExtrema ?? null)) {
             return ['first' => false, 'last' => false];
         }
 

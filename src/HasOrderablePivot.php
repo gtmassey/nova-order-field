@@ -1,6 +1,6 @@
 <?php
 
-namespace MichielKempen\NovaOrderField;
+namespace Gtmassey\NovaOrderField;
 
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -11,7 +11,6 @@ trait HasOrderablePivot
     /**
      * Build an "index" query for the given related resource.
      *
-     * @param  NovaRequest  $request
      * @param  Builder  $query
      * @param  \Illuminate\Database\Eloquent\Model  $pivot
      * @return Builder
@@ -20,7 +19,7 @@ trait HasOrderablePivot
     {
         $attribute = static::modelOrderByFieldAttribute($pivot);
 
-        $query->select(static::newModel()->getTable() . '.*');
+        $query->select(static::newModel()->getTable().'.*');
 
         return static::orderedIndexQuery(
             $query,
@@ -31,12 +30,11 @@ trait HasOrderablePivot
     /**
      * Get the requested resource relationship
      *
-     * @param  NovaRequest  $request
      * @return null|\Illuminate\Database\Eloquent\Model
      */
     public static function orderedManyPivotModel(NovaRequest $request)
     {
-        if(!$request->viaRelationship()) {
+        if (! $request->viaRelationship()) {
             return;
         }
 
@@ -44,13 +42,13 @@ trait HasOrderablePivot
 
         $relationship = $resource::newModel()->{$request->viaRelationship}();
 
-        if(!$relationship || !$relationship->getPivotClass()) {
+        if (! $relationship || ! $relationship->getPivotClass()) {
             return;
         }
 
         $pivot = $relationship->getPivotClass();
 
-        if(!($model = new $pivot) instanceof Sortable) {
+        if (! ($model = new $pivot) instanceof Sortable) {
             return;
         }
 
